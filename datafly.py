@@ -1,6 +1,7 @@
 import argparse
 import csv
 import sys
+import copy
 from datetime import datetime
 from io import StringIO
 from dgh import CsvDGH
@@ -241,7 +242,8 @@ class _Table:
 
                 self._debug("[DEBUG] Suppressing max k non k-anonymous tuples...")
                 # Drop tuples which occur less than k times:
-                for qi_sequence, data in qi_frequency.items():
+                qi_frequency_copy = copy.deepcopy(qi_frequency)
+                for qi_sequence, data in qi_frequency_copy.items():
                     if data[0] < k:
                         qi_frequency.pop(qi_sequence)
                 self._log("[LOG] Suppressed %d tuples." % count, endl=True, enabled=v)
